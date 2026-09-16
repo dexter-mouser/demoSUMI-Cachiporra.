@@ -1,0 +1,398 @@
+/* ======================================================================
+   TOKENS DE MARCA — tomados literalmente de fargo-suministros-guia-de-marca.md
+   ====================================================================== */
+:root{
+  --fargo-cyan:      #00AEEF;
+  --fargo-magenta:   #EC008C;
+  --fargo-yellow:    #FFD400;
+  --fargo-key:       #1A1A1A;
+  --fargo-blue-700:  #0B4F8A;
+  --fargo-blue-500:  #1E7FC2;
+  --fargo-gray-100:  #E6E6E6;
+  --fargo-gray-300:  #C9C9C9;
+  --fargo-gray-600:  #5C5C5C;
+  --fargo-white:     #FFFFFF;
+  --fargo-success:   #2FAE60;
+  --fargo-danger:    #E4483E;
+
+  --radius-card: 20px;
+  --radius-pill: 999px;
+  --shadow-card: 0 10px 30px rgba(11,79,138,0.14);
+  --shadow-topbar: 0 2px 10px rgba(11,79,138,0.10);
+  --font-display: 'Poppins', system-ui, sans-serif;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  font-family:var(--font-display);
+  background:var(--fargo-gray-100);
+  color:var(--fargo-key);
+  -webkit-tap-highlight-color:transparent;
+}
+button{ font-family:inherit; }
+h1,h2,h3,p{ margin:0; }
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
+}
+
+/* ---------- estructura general ---------- */
+#app-shell{
+  min-height:100%;
+  display:flex;
+  flex-direction:column;
+  max-width:520px;
+  margin:0 auto;
+  background:var(--fargo-gray-100);
+}
+
+/* Fondo blanco: el logo de Fargo se ve en sus colores reales (cian, magenta,
+   amarillo, azul), nunca filtrado a un solo color. */
+.topbar{
+  background:var(--fargo-white);
+  box-shadow:var(--shadow-topbar);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0.6rem 1rem;
+  gap:0.75rem;
+  position:sticky;
+  top:0;
+  z-index:5;
+}
+.topbar .brand{
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+}
+.topbar img.brand-logo{
+  height:30px;
+  display:block;
+  /* sin filtros: siempre a color, tal como en la guía de marca */
+}
+.topbar .brand-icon{ width:20px; height:20px; flex:0 0 auto; }
+.topbar .game-badge{
+  font-weight:700;
+  font-size:0.78rem;
+  letter-spacing:0.02em;
+  background:var(--fargo-magenta);
+  color:var(--fargo-white);
+  padding:0.35rem 0.8rem;
+  border-radius:var(--radius-pill);
+  white-space:nowrap;
+  display:flex;
+  align-items:center;
+  gap:0.35rem;
+}
+.topbar .game-badge svg{ width:14px; height:14px; }
+
+main{
+  flex:1;
+  padding:1.25rem 1rem 2.5rem;
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+}
+
+.card{
+  background:var(--fargo-white);
+  border-radius:var(--radius-card);
+  box-shadow:var(--shadow-card);
+  border-top:4px solid var(--fargo-cyan);
+  padding:1.4rem 1.3rem;
+}
+.card.accent-magenta{ border-top-color:var(--fargo-magenta); }
+.card.accent-yellow{ border-top-color:var(--fargo-yellow); }
+
+.eyebrow{
+  font-size:0.72rem;
+  font-weight:600;
+  color:var(--fargo-blue-500);
+  margin:0 0 0.35rem;
+}
+h1.title{
+  font-size:1.55rem;
+  font-weight:800;
+  line-height:1.2;
+  color:var(--fargo-key);
+}
+h2.subtitle{
+  font-size:1.05rem;
+  font-weight:700;
+  color:var(--fargo-blue-700);
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+}
+h2.subtitle svg{ width:20px; height:20px; flex:0 0 auto; }
+p.body-text{
+  font-size:0.94rem;
+  line-height:1.5;
+  color:var(--fargo-gray-600);
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:0.55rem;
+  border:none;
+  border-radius:var(--radius-pill);
+  padding:0.85rem 1.6rem;
+  font-weight:700;
+  font-size:0.95rem;
+  cursor:pointer;
+  transition:transform .15s ease;
+  width:100%;
+}
+.btn svg{ width:18px; height:18px; flex:0 0 auto; }
+.btn:active{ transform:translateY(1px); }
+.btn:disabled{ opacity:0.45; cursor:not-allowed; }
+.btn-primary{ background:var(--fargo-magenta); color:var(--fargo-white); }
+.btn-primary:hover:not(:disabled){ transform:translateY(-2px); }
+.btn-secondary{ background:var(--fargo-blue-700); color:var(--fargo-white); }
+.btn-ghost{ background:var(--fargo-gray-100); color:var(--fargo-key); }
+
+.field{ display:flex; flex-direction:column; gap:0.4rem; }
+.field label{ font-size:0.82rem; font-weight:600; color:var(--fargo-gray-600); }
+.field input[type="text"]{
+  border:2px solid var(--fargo-gray-300);
+  border-radius:12px;
+  padding:0.7rem 0.85rem;
+  font-size:0.95rem;
+  font-family:inherit;
+  color:var(--fargo-key);
+}
+.field input[type="text"]:focus{
+  outline:none;
+  border-color:var(--fargo-cyan);
+}
+
+.stepper{
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  justify-content:center;
+}
+.stepper button{
+  width:44px; height:44px;
+  border-radius:50%;
+  border:2px solid var(--fargo-blue-700);
+  background:var(--fargo-white);
+  color:var(--fargo-blue-700);
+  font-size:1.3rem;
+  font-weight:700;
+  cursor:pointer;
+}
+.stepper button:disabled{ opacity:0.35; cursor:not-allowed; }
+.stepper .count{
+  font-size:1.6rem;
+  font-weight:800;
+  min-width:2ch;
+  text-align:center;
+}
+
+.name-list{ display:flex; flex-direction:column; gap:0.6rem; }
+
+.cmyk-dots{ display:flex; gap:6px; }
+.cmyk-dots span{ width:9px; height:9px; border-radius:50%; display:inline-block; }
+.cmyk-dots span:nth-child(1){ background:var(--fargo-cyan); }
+.cmyk-dots span:nth-child(2){ background:var(--fargo-magenta); }
+.cmyk-dots span:nth-child(3){ background:var(--fargo-yellow); }
+.cmyk-dots span:nth-child(4){ background:var(--fargo-key); }
+
+/* ---------- pantallas con icono ilustrativo grande (SVG, sin fotos) ---------- */
+.screen-visual{
+  display:flex;
+  justify-content:center;
+  padding:0.35rem 0 0.6rem;
+}
+.screen-visual svg{ width:140px; height:140px; }
+
+/* ---------- teclado numérico secreto ---------- */
+.keypad{
+  display:grid;
+  grid-template-columns:repeat(5, 1fr);
+  gap:0.55rem;
+}
+.keypad button{
+  aspect-ratio:1/1;
+  border-radius:14px;
+  border:2px solid var(--fargo-gray-300);
+  background:var(--fargo-white);
+  font-size:1.15rem;
+  font-weight:700;
+  color:var(--fargo-key);
+  cursor:pointer;
+}
+.keypad button.selected{
+  border-color:var(--fargo-magenta);
+  background:var(--fargo-magenta);
+  color:var(--fargo-white);
+}
+
+/* ---------- tablero de juego ---------- */
+.turn-banner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:var(--fargo-blue-700);
+  color:var(--fargo-white);
+  border-radius:16px;
+  padding:0.85rem 1.1rem;
+}
+.turn-banner .who{ display:flex; align-items:center; gap:0.55rem; font-weight:800; font-size:1.05rem; }
+.turn-banner .who svg{ width:22px; height:22px; flex:0 0 auto; }
+.turn-banner .hint{ font-size:0.72rem; opacity:0.85; margin-top:0.1rem; }
+
+.board-grid{
+  display:grid;
+  grid-template-columns:repeat(5, 1fr);
+  gap:0.6rem;
+  user-select:none;
+  touch-action:none;
+}
+.board-cell{
+  position:relative;
+  aspect-ratio:1/1;
+  border-radius:14px;
+  background:var(--fargo-white);
+  border:2px solid var(--fargo-gray-300);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.3rem;
+  font-weight:800;
+  color:var(--fargo-key);
+  overflow:hidden;
+  cursor:grab;
+}
+.board-cell.crossed{
+  color:var(--fargo-gray-300);
+  border-color:var(--fargo-gray-300);
+  cursor:default;
+}
+.board-cell .strike{
+  position:absolute;
+  left:8%;
+  top:50%;
+  width:0%;
+  height:4px;
+  background:var(--fargo-magenta);
+  transform:translateY(-50%) rotate(-18deg);
+  transform-origin:left center;
+  border-radius:4px;
+  transition:width .05s linear;
+}
+.board-cell.crossed .strike{
+  width:84%;
+  background:var(--fargo-gray-600);
+}
+
+.hands-row{
+  display:flex;
+  gap:0.55rem;
+  overflow-x:auto;
+  padding-bottom:0.2rem;
+}
+.hand-card{
+  flex:0 0 auto;
+  width:78px;
+  border-radius:12px;
+  padding:0.55rem 0.4rem;
+  text-align:center;
+  background:var(--fargo-blue-500);
+  color:var(--fargo-white);
+}
+.hand-card .hand-icon{
+  width:34px; height:34px;
+  margin:0 auto 0.35rem;
+  border-radius:50%;
+  background:var(--fargo-white);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--fargo-blue-700);
+  font-weight:800;
+}
+.hand-card .hand-icon svg{ width:20px; height:20px; }
+.hand-card.eliminated{
+  background:var(--fargo-gray-300);
+  color:var(--fargo-gray-600);
+}
+.hand-card.eliminated .hand-icon{
+  background:var(--fargo-white);
+  color:var(--fargo-danger);
+}
+.hand-card .hand-name{
+  font-size:0.68rem;
+  font-weight:700;
+  line-height:1.15;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.hand-card.current-turn{ outline:3px solid var(--fargo-yellow); }
+
+.history-box{
+  display:flex;
+  align-items:flex-start;
+  gap:0.55rem;
+  background:var(--fargo-white);
+  border-radius:14px;
+  padding:0.75rem 0.9rem;
+  font-size:0.84rem;
+  color:var(--fargo-gray-600);
+  border:1px dashed var(--fargo-gray-300);
+}
+.history-box svg{ width:18px; height:18px; flex:0 0 auto; margin-top:0.1rem; }
+.history-box strong{ color:var(--fargo-key); }
+
+/* ---------- pantalla final ---------- */
+.final-title{ text-align:center; }
+.winners-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:0.4rem;
+  justify-content:center;
+}
+.winners-list span{
+  background:var(--fargo-gray-100);
+  border-radius:var(--radius-pill);
+  padding:0.3rem 0.7rem;
+  font-size:0.78rem;
+  font-weight:600;
+  display:inline-flex;
+  align-items:center;
+  gap:0.3rem;
+}
+.winners-list span svg{ width:12px; height:12px; }
+.bet-box{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:0.5rem;
+  background:var(--fargo-yellow);
+  border-radius:14px;
+  padding:0.9rem 1rem;
+  text-align:center;
+  font-weight:800;
+  color:var(--fargo-key);
+}
+.bet-box svg{ width:22px; height:22px; }
+
+.footer-note{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:0.4rem;
+  text-align:center;
+  font-size:0.72rem;
+  color:var(--fargo-gray-600);
+  padding:0.5rem 1rem 1.25rem;
+}
+.footer-note svg{ width:14px; height:14px; }
+
+.hidden{ display:none !important; }
