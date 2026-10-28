@@ -1,14 +1,14 @@
 // Vista — arma el DOM a partir del estado.
-const escapar = texto => String(texto).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+const escapar = texto => String(texto).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const ilustracion = (icono, tono = '') => `<div class="ilustracion ${tono}">${icono()}</div>`;
 const numerosDelTablero = () => Array.from({ length: estado.sesion.tamano }, (_, i) => i + 1);
 
-function selector(valor, accionMenos, accionMas, desactivarMenos, desactivarMas, etiqueta){
+function selector(valor, accionMenos, accionMas, desactivarMenos, desactivarMas, etiqueta) {
   return `<div class="selector"><button data-accion="${accionMenos}" ${desactivarMenos ? 'disabled' : ''} aria-label="Menos ${etiqueta}">−</button>
     <div class="contador">${valor}</div>
     <button data-accion="${accionMas}" ${desactivarMas ? 'disabled' : ''} aria-label="Más ${etiqueta}">+</button></div>`;
 }
-function pantallaInicio(){
+function pantallaInicio() {
   return `<section class="inicio">
     <div class="heroe"><span class="bola b0">3</span><span class="bola b1">7</span><span class="bola b2">10</span></div>
     <h1 class="titulo-inicio">Sumi<span>Porra</span></h1>
@@ -17,7 +17,7 @@ function pantallaInicio(){
     <button class="btn btn-claro" data-accion="ayuda">${ICONOS.ayuda()} Cómo jugar</button>
   </section>`;
 }
-function pantallaConfiguracion(){
+function pantallaConfiguracion() {
   const campos = Array.from({ length: estado.cantidad }, (_, i) =>
     `<input type="text" maxlength="16" data-indice="${i}" placeholder="Jugador ${i + 1}" value="${escapar(estado.nombres[i] || '')}">`).join('');
   const fichas = PREMIOS.map((p, i) => `<button class="ficha-premio ${estado.premioIndice === i ? 'activo' : ''}" data-accion="premio" data-premio="${i}">${escapar(p)}</button>`).join('')
@@ -33,7 +33,7 @@ function pantallaConfiguracion(){
     <button class="btn btn-primario" data-accion="iniciar">${ICONOS.gotaTinta()} Empezar</button>
   </section>`;
 }
-function pantallaRelevo(){
+function pantallaRelevo() {
   const jugador = estado.sesion.jugadores[estado.indiceElegir];
   return `<section class="tarjeta pila">
     ${ilustracion(ICONOS.relevo, 'azul')}
@@ -43,7 +43,7 @@ function pantallaRelevo(){
     <button class="btn btn-secundario" data-accion="relevo">${ICONOS.escudo()} Soy ${escapar(jugador.nombre)}</button>
   </section>`;
 }
-function pantallaElegir(){
+function pantallaElegir() {
   const jugador = estado.sesion.jugadores[estado.indiceElegir];
   const teclas = numerosDelTablero().map(n =>
     `<button data-accion="elegir" data-numero="${n}" class="${estado.valorElegido === n ? 'elegido' : ''}">${n}</button>`).join('');
@@ -53,13 +53,13 @@ function pantallaElegir(){
     <button class="btn btn-primario" data-accion="secreto" ${estado.valorElegido ? '' : 'disabled'}>${ICONOS.escudo()} Guardar en secreto</button>
   </section>`;
 }
-function textoEvento(evento){
+function textoEvento(evento) {
   if (!evento) return 'Toca un número para resaltarlo.';
   if (evento.tipo === TipoEvento.NADA) return `<strong>${escapar(nombrePorId(evento.idAutor))}</strong> tachó el ${evento.numero}: nadie lo tenía.`;
   if (evento.tipo === TipoEvento.ELIMINADO) return `<strong>${escapar(nombrePorId(evento.idAutor))}</strong> tachó el ${evento.numero} y eliminó a <strong>${escapar(nombrePorId(evento.idVictima))}</strong>.`;
   return '';
 }
-function pantallaJuego(){
+function pantallaJuego() {
   const sesion = estado.sesion, actual = sesion.jugadores[sesion.turno];
   const celdas = numerosDelTablero().map(n => {
     const tachada = sesion.tachados.includes(n), resaltada = estado.seleccionado === n;
@@ -73,7 +73,7 @@ function pantallaJuego(){
     <div class="fichas">${fichas}</div>
     <div class="historial">${ICONOS.llama()}<span>${textoEvento(estado.ultimoEvento)}</span></div>`;
 }
-function pantallaDesempate(){
+function pantallaDesempate() {
   const evento = estado.ultimoEvento, nombres = evento.idsPoseedores.map(id => escapar(nombrePorId(id))).join(', ');
   return `<section class="tarjeta acento-amarillo pila">
     ${ilustracion(ICONOS.llama, 'azul')}
@@ -82,11 +82,11 @@ function pantallaDesempate(){
     <button class="btn btn-primario" data-accion="desempate">${ICONOS.revancha()} Empezar desempate</button>
   </section>`;
 }
-function pantallaFinal(){
+function pantallaFinal() {
   const evento = estado.ultimoEvento, perdedor = nombrePorId(estado.idPerdedor);
   const motivo = evento.tipo === TipoEvento.QUEMADO ? `Tachó su propio número (${evento.numero}): ¡quemó la olla!`
     : evento.tipo === TipoEvento.COMPARTIDO ? `Tachó el ${evento.numero}, que tenían varios jugadores.`
-    : `Fue el último en pie tras eliminar a ${escapar(nombrePorId(evento.idVictima))}.`;
+      : `Fue el último en pie tras eliminar a ${escapar(nombrePorId(evento.idVictima))}.`;
   const salvados = estado.jugadoresPartida.filter(j => j.id !== estado.idPerdedor)
     .map(j => `<span>${ICONOS.escudo()} ${escapar(j.nombre)}</span>`).join('');
   return `<section class="tarjeta acento-magenta pila">
@@ -99,12 +99,12 @@ function pantallaFinal(){
     <button class="btn btn-primario" data-accion="denuevo">${ICONOS.revancha()} Jugar de nuevo</button>
   </section>`;
 }
-function htmlAviso(){
+function htmlAviso() {
   if (estado.pantalla !== Pantalla.JUEGO || estado.seleccionado === null) return '';
   return `<div class="aviso" role="status"><span>Toca de nuevo el <b>${estado.seleccionado}</b> para confirmar</span>
     <button data-accion="cancelar">Cancelar</button></div>`;
 }
-function htmlMano(){
+function htmlMano() {
   if (!estado.mano) return '';
   const m = estado.mano;
   const mano = `<svg class="mano-svg" viewBox="0 0 200 270" aria-hidden="true"><g fill="#FFD400" stroke="#1A1A1A" stroke-width="5">
@@ -118,7 +118,7 @@ function htmlMano(){
       <h2 class="mano-titulo">¡${escapar(m.victima)} eliminado!</h2>
       <p class="mano-autor">Ganó esta ronda: <strong>${escapar(m.autor)}</strong></p></div></div>`;
 }
-function htmlAyuda(){
+function htmlAyuda() {
   if (!estado.ayudaAbierta) return '';
   return `<div class="modal" data-accion="ayuda-fondo"><div class="tarjeta" role="dialog" aria-label="Cómo jugar">
     <button class="btn-icono cerrar" data-accion="ayuda-cerrar" aria-label="Cerrar">${ICONOS.cerrar()}</button>
@@ -137,9 +137,11 @@ function htmlAyuda(){
     <button class="btn btn-secundario" data-accion="ayuda-cerrar">Entendido</button>
   </div></div>`;
 }
-function renderizar(){
-  const pantallas = { [Pantalla.INICIO]:pantallaInicio, [Pantalla.CONFIGURACION]:pantallaConfiguracion, [Pantalla.RELEVO]:pantallaRelevo,
-    [Pantalla.ELEGIR]:pantallaElegir, [Pantalla.JUEGO]:pantallaJuego, [Pantalla.DESEMPATE]:pantallaDesempate, [Pantalla.FINAL]:pantallaFinal };
+function renderizar() {
+  const pantallas = {
+    [Pantalla.INICIO]: pantallaInicio, [Pantalla.CONFIGURACION]: pantallaConfiguracion, [Pantalla.RELEVO]: pantallaRelevo,
+    [Pantalla.ELEGIR]: pantallaElegir, [Pantalla.JUEGO]: pantallaJuego, [Pantalla.DESEMPATE]: pantallaDesempate, [Pantalla.FINAL]: pantallaFinal
+  };
   document.getElementById('app').innerHTML = pantallas[estado.pantalla]();
   document.getElementById('raiz-aviso').innerHTML = htmlAviso();
   document.getElementById('raiz-mano').innerHTML = htmlMano();

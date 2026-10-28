@@ -6,8 +6,8 @@ const RANGO_DEFECTO = 10;
 const DURACION_MANO_MS = 2800;
 const PREMIO_PERSONALIZADO = -1;
 const PREMIOS = ['Gaseosa', 'Tinto'];
-const Pantalla = { INICIO:'inicio', CONFIGURACION:'configuracion', RELEVO:'relevo', ELEGIR:'elegir', JUEGO:'juego', DESEMPATE:'desempate', FINAL:'final' };
+const Pantalla = { INICIO: 'inicio', CONFIGURACION: 'configuracion', RELEVO: 'relevo', ELEGIR: 'elegir', JUEGO: 'juego', DESEMPATE: 'desempate', FINAL: 'final' };
 const TipoEvento = {
-  NADA:'nada', IGNORADO:'ignorado', ELIMINADO:'eliminado',
-  QUEMADO:'quemado', COMPARTIDO:'compartido', ULTIMO_EN_PIE:'ultimo_en_pie', DESEMPATE:'desempate'
+  NADA: 'nada', IGNORADO: 'ignorado', ELIMINADO: 'eliminado',
+  QUEMADO: 'quemado', COMPARTIDO: 'compartido', ULTIMO_EN_PIE: 'ultimo_en_pie', DESEMPATE: 'desempate'
 };
