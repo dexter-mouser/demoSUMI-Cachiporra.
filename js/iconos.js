@@ -10,5 +10,6 @@ const ICONOS = {
   copaApuesta: () => _envolverSvg('<path fill="currentColor" d="M5 3h14v5a7 7 0 0 1-6 6.9V19h4v2H7v-2h4v-4.1A7 7 0 0 1 5 8V3z"/>'),
   ayuda:       () => _envolverSvg(`<circle cx="12" cy="12" r="10" ${_trazo}/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7" ${_trazo}/><circle cx="12" cy="17" r="1.1" fill="currentColor"/>`),
   cerrar:      () => _envolverSvg(`<path d="M6 6l12 12M18 6L6 18" ${_trazo}/>`),
+  jugar:       () => _envolverSvg('<path fill="currentColor" d="M7 4l13 8-13 8z"/>'),
   revancha:    () => _envolverSvg(`<path d="M20 12a8 8 0 1 1-2.5-5.8M20 4v5h-5" ${_trazo}/>`)
 };

@@ -6,16 +6,20 @@ document.addEventListener('click', e => {
   const accion = elemento.dataset.accion, numero = Number(elemento.dataset.numero);
   if (accion === 'ayuda-fondo' && e.target !== elemento) return; // un clic dentro de la tarjeta no cierra
   const acciones = {
+    inicio: irAInicio, jugar: irAConfiguracion,
     menos: () => fijarCantidad(estado.cantidad - 1), mas: () => fijarCantidad(estado.cantidad + 1),
+    'rango-menos': () => fijarRango(estado.rango - 1), 'rango-mas': () => fijarRango(estado.rango + 1),
+    premio: () => fijarPremio(Number(elemento.dataset.premio)),
     iniciar: iniciarPartida, relevo: confirmarRelevo, elegir: () => elegirNumero(numero), secreto: confirmarSecreto,
     celda: () => tocarCelda(numero), cancelar: cancelarSeleccion, desempate: iniciarDesempate, denuevo: jugarDeNuevo,
+    'mano-cerrar': cerrarMano,
     ayuda: () => alternarAyuda(true), 'ayuda-cerrar': () => alternarAyuda(false), 'ayuda-fondo': () => alternarAyuda(false)
   };
   if (acciones[accion]) acciones[accion]();
 });
 document.addEventListener('input', e => {
   if (e.target.dataset.indice !== undefined) fijarNombre(Number(e.target.dataset.indice), e.target.value);
-  else if (e.target.dataset.apuesta !== undefined) fijarApuesta(e.target.value);
+  else if (e.target.dataset.premioTexto !== undefined) fijarPremioTexto(e.target.value);
 });
 
 renderizar();

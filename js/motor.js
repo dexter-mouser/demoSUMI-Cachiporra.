@@ -1,8 +1,9 @@
 // Motor de reglas — lógica pura, sin DOM. No modifica la sesión recibida.
-function crearSesion(jugadores){
+function crearSesion(jugadores, tamano){
   return {
     jugadores: jugadores.map(j => ({ id:j.id, nombre:j.nombre, secreto:null, vivo:true })),
     tachados: [],
+    tamano,
     turno: 0
   };
 }
@@ -19,13 +20,13 @@ function resolverTachado(sesion, numero){
 
   const actual = sesion.jugadores[sesion.turno];
   const poseedores = sesion.jugadores.filter(j => j.vivo && j.secreto === numero);
-  const esUltimo = sesion.tachados.length === TAMANO_TABLERO - 1;
+  const esUltimo = sesion.tachados.length === sesion.tamano - 1;
   const tachados = [...sesion.tachados, numero];
 
   // 2. último número compartido por 2+ vivos: desempate
   if (esUltimo && poseedores.length >= 2){
     return { evento:{ tipo:TipoEvento.DESEMPATE, numero, idsPoseedores:poseedores.map(j => j.id) },
-             sesion:crearSesion(poseedores) };
+             sesion:crearSesion(poseedores, sesion.tamano) };
   }
   // 3. tu propio secreto: pierdes
   if (actual.secreto === numero){
@@ -37,7 +38,7 @@ function resolverTachado(sesion, numero){
     const jugadores = sesion.jugadores.map(j => j.id === victima.id ? { ...j, vivo:false } : j);
     const vivos = jugadores.filter(j => j.vivo);
     if (vivos.length === 1){
-      return { evento:{ tipo:TipoEvento.ULTIMO_EN_PIE, numero, idVictima:victima.id, idPerdedor:vivos[0].id },
+      return { evento:{ tipo:TipoEvento.ULTIMO_EN_PIE, numero, idVictima:victima.id, idAutor:actual.id, idPerdedor:vivos[0].id },
                sesion:{ ...sesion, jugadores, tachados } };
     }
     return { evento:{ tipo:TipoEvento.ELIMINADO, numero, idVictima:victima.id, idAutor:actual.id },
